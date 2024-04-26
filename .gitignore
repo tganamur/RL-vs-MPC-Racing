@@ -1,0 +1,30 @@
+# runtime directories from Linux in Docker
+.bash_history
+.cache
+.config
+.empty
+__pycache__
+
+# config file for VS Code settings / IDE stuff
+.vscode
+.idea/
+
+# docker build log
+dockerfile-build.log
+
+# generated map files
+maps/
+centerline/
+
+# tensorboard
+*tensorboard
+
+# monitor logging
+tmp/
+
+# weights and biases
+wandb/
+
+#train folder
+train_test/
+train/
