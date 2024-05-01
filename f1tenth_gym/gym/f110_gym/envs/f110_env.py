@@ -30,7 +30,7 @@ from gym import error, spaces, utils
 from gym.utils import seeding
 
 # base classes
-from f110_gym.envs.base_classes import Simulator
+from f110_gym.envs.base_classes import Simulator, Integrator
 
 # others
 import numpy as np
@@ -42,13 +42,6 @@ import pyglet
 pyglet.options['debug_gl'] = False
 from pyglet import gl
 
-# colab
-try:
-    import google.colab
-    IN_COLAB = True
-except:
-    IN_COLAB = False
-
 # constants
 
 # rendering
@@ -57,7 +50,7 @@ VIDEO_H = 400
 WINDOW_W = 1000
 WINDOW_H = 800
 
-class F110Env(gym.Env, utils.EzPickle):
+class F110Env(gym.Env):
     """
     OpenAI gym environment for F1TENTH
     
@@ -98,6 +91,11 @@ class F110Env(gym.Env, utils.EzPickle):
             ego_idx (int, default=0): ego's index in list of agents
     """
     metadata = {'render.modes': ['human', 'human_fast']}
+
+    # rendering
+    renderer = None
+    current_obs = None
+    render_callbacks = []
 
     def __init__(self, **kwargs):        
         # kwargs extraction
@@ -146,11 +144,16 @@ class F110Env(gym.Env, utils.EzPickle):
         except:
             self.ego_idx = 0
 
+        # default integrator
+        try:
+            self.integrator = kwargs['integrator']
+        except:
+            self.integrator = Integrator.RK4
+
         # radius to consider done
         self.start_thresh = 0.5  # 10cm
 
         # env states
-        self.done = True
         self.poses_x = []
         self.poses_y = []
         self.poses_theta = []
@@ -178,12 +181,11 @@ class F110Env(gym.Env, utils.EzPickle):
         self.start_rot = np.eye(2)
 
         # initiate stuff
-        self.sim = Simulator(self.params, self.num_agents, self.seed)
+        self.sim = Simulator(self.params, self.num_agents, self.seed, time_step=self.timestep, integrator=self.integrator)
         self.sim.set_map(self.map_path, self.map_ext)
 
-        # rendering
-        self.renderer = None
-        self.current_obs = None
+        # stateful observations for rendering
+        self.render_obs = None
 
     def __del__(self):
         """
@@ -218,7 +220,7 @@ class F110Env(gym.Env, utils.EzPickle):
         temp_y[idx2] = -right_t - temp_y[idx2]
         temp_y[np.invert(np.logical_or(idx1, idx2))] = 0
 
-        dist2 = delta_pt[0,:]**2 + temp_y**2
+        dist2 = delta_pt[0, :]**2 + temp_y**2
         closes = dist2 <= 0.1
         for i in range(self.num_agents):
             if closes[i] and not self.near_starts[i]:
@@ -233,7 +235,7 @@ class F110Env(gym.Env, utils.EzPickle):
         
         done = (self.collisions[self.ego_idx]) or np.all(self.toggle_list >= 4)
         
-        return done, self.toggle_list >= 4
+        return bool(done), self.toggle_list >= 4
 
     def _update_state(self, obs_dict):
         """
@@ -269,7 +271,16 @@ class F110Env(gym.Env, utils.EzPickle):
         obs['lap_times'] = self.lap_times
         obs['lap_counts'] = self.lap_counts
 
-        self.current_obs = obs
+        F110Env.current_obs = obs
+
+        self.render_obs = {
+            'ego_idx': obs['ego_idx'],
+            'poses_x': obs['poses_x'],
+            'poses_y': obs['poses_y'],
+            'poses_theta': obs['poses_theta'],
+            'lap_times': obs['lap_times'],
+            'lap_counts': obs['lap_counts']
+            }
 
         # times
         reward = self.timestep
@@ -279,10 +290,10 @@ class F110Env(gym.Env, utils.EzPickle):
         self._update_state(obs)
 
         # check done
-        self.done, toggle_list = self._check_done()
+        done, toggle_list = self._check_done()
         info = {'checkpoint_done': toggle_list}
 
-        return obs, reward, self.done, info
+        return obs, reward, done, info
 
     def reset(self, poses):
         """
@@ -316,8 +327,18 @@ class F110Env(gym.Env, utils.EzPickle):
 
         # get no input observations
         action = np.zeros((self.num_agents, 2))
-        obs, reward, self.done, info = self.step(action)
-        return obs, reward, self.done, info
+        obs, reward, done, info = self.step(action)
+
+        self.render_obs = {
+            'ego_idx': obs['ego_idx'],
+            'poses_x': obs['poses_x'],
+            'poses_y': obs['poses_y'],
+            'poses_theta': obs['poses_theta'],
+            'lap_times': obs['lap_times'],
+            'lap_counts': obs['lap_counts']
+            }
+        
+        return obs, reward, done, info
 
     def update_map(self, map_path, map_ext):
         """
@@ -345,7 +366,17 @@ class F110Env(gym.Env, utils.EzPickle):
         """
         self.sim.update_params(params, agent_idx=index)
 
-    def render(self, mode='human', colab_start=False):
+    def add_render_callback(self, callback_func):
+        """
+        Add extra drawing function to call during rendering.
+
+        Args:
+            callback_func (function (EnvRenderer) -> None): custom function to called during render()
+        """
+
+        F110Env.render_callbacks.append(callback_func)
+
+    def render(self, mode='human'):
         """
         Renders the environment with pyglet. Use mouse scroll in the window to zoom in/out, use mouse click drag to pan. Shows the agents, the map, current fps (bottom left corner), and the race information near as text.
 
@@ -358,31 +389,22 @@ class F110Env(gym.Env, utils.EzPickle):
             None
         """
         assert mode in ['human', 'human_fast']
-        if IN_COLAB:
-            if self.renderer is None:
-                # first call, initialize everything
-                from f110_gym.envs.colab import Colab
-                self.renderer = Colab(self.map_name, self.map_ext, self.num_agents,
-                                     [self.start_xs, self.start_ys, self.start_thetas],
-                                     [self.params['width'], self.params['length']])
-            elif colab_start:
-                # reloading Colab display
-                self.renderer.start([self.start_xs, self.start_ys, self.start_thetas],
-                                    [self.params['width'], self.params['length']])
-            else:
-                # updating cars
-                self.renderer.update_cars(self.poses_x, self.poses_y, self.poses_theta, self.done, mode)
-        else:
-            if self.renderer is None:
-                # first call, initialize everything
-                from f110_gym.envs.rendering import EnvRenderer
-                self.renderer = EnvRenderer(WINDOW_W, WINDOW_H)
-                self.renderer.update_map(self.map_name, self.map_ext)
-            self.renderer.update_obs(self.current_obs)
-            self.renderer.dispatch_events()
-            self.renderer.on_draw()
-            self.renderer.flip()
-            if mode == 'human':
-                time.sleep(0.005)
-            elif mode == 'human_fast':
-                pass
+        
+        if F110Env.renderer is None:
+            # first call, initialize everything
+            from f110_gym.envs.rendering import EnvRenderer
+            F110Env.renderer = EnvRenderer(WINDOW_W, WINDOW_H)
+            F110Env.renderer.update_map(self.map_name, self.map_ext)
+            
+        F110Env.renderer.update_obs(self.render_obs)
+
+        for render_callback in F110Env.render_callbacks:
+            render_callback(F110Env.renderer)
+        
+        F110Env.renderer.dispatch_events()
+        F110Env.renderer.on_draw()
+        F110Env.renderer.flip()
+        if mode == 'human':
+            time.sleep(0.005)
+        elif mode == 'human_fast':
+            pass
