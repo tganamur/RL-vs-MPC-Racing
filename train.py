@@ -39,15 +39,15 @@ from datetime import datetime
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.env_util import make_vec_env
-from stable_baselines3.common.callbacks import EvalCallback
+from stable_baselines3.common.callbacks import EvalCallback, ProgressBarCallback
 from code.wrappers import F110_Wrapped, RandomMap, RandomF1TenthMap, ThrottleMaxSpeedReward
 from code.manus_callbacks import SaveOnBestTrainingRewardCallback
 from code.schedulers import linear_schedule
 
 TRAIN_DIRECTORY = "./train"
-TRAIN_STEPS = 1.5 * np.power(10, 5)    # for reference, it takes about one sec per 500 steps
+TRAIN_STEPS = 25_000    # for reference, it takes about one sec per 500 steps
 SAVE_CHECK_FREQUENCY = int(TRAIN_STEPS / 10)
-MIN_EVAL_EPISODES = 100
+MIN_EVAL_EPISODES = 10
 NUM_PROCESS = 4
 MAP_PATH = "./f1tenth_racetracks/Austin/Austin_map"
 MAP_EXTENSION = ".png"
@@ -76,7 +76,7 @@ def main():
     # vectorise environment (parallelise)
     envs = make_vec_env(wrap_env,
                         n_envs=NUM_PROCESS,
-                        seed=np.random.randint(pow(2, 31) - 1),
+                        seed=1,
                         vec_env_cls=SubprocVecEnv)
 
     # choose RL model and policy here
@@ -89,10 +89,10 @@ def main():
     eval_callback = EvalCallback(envs, best_model_save_path='./train_test/',
                              log_path='./train_test/', eval_freq=5000,
                              deterministic=True, render=False)
-
+    progress_bar_callback = ProgressBarCallback()
     # train model and record time taken
     start_time = time.time()
-    model.learn(total_timesteps=TRAIN_STEPS, callback=eval_callback)
+    model.learn(total_timesteps=TRAIN_STEPS, callback=[eval_callback, progress_bar_callback])
     print(f"Training time {time.time() - start_time:.2f}s")
     print("Training cycle complete.")
 
@@ -113,10 +113,10 @@ def main():
     # wrap evaluation environment
     eval_env = F110_Wrapped(eval_env)
     eval_env = RandomF1TenthMap(eval_env, 500)
-    eval_env.seed(np.random.randint(pow(2, 31) - 1))
+    eval_env.seed(4)
     model = model.load("./train_test/best_model")
 
-    # simulate a few episodes and render them, ctrl-c to cancel an episode
+    #simulate a few episodes and render them, ctrl-c to cancel an episode
     episode = 0
     while episode < MIN_EVAL_EPISODES:
         try:
