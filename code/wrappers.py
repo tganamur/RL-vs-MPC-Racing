@@ -313,6 +313,7 @@ class F110_Wrapped(gym.Wrapper):
         self._current_waypoint = np.zeros(2)
         self._current_index = 0
         self.prev_waypoint = np.zeros(2)
+        self.conf = conf
 
         # Initialize the PurePursuitPlanner
         self.planner = PurePursuitPlanner(conf, self.car_length)
@@ -428,7 +429,8 @@ class F110_Wrapped(gym.Wrapper):
         # point car in random forward direction, not aiming at walls
         t = direction
         # reset car with chosen pose
-        observation, _, _, _ = self.env.reset(np.array([[x, y, t]]))
+        observation, _, _, _ = self.env.reset(np.array([[self.conf.sx, self.conf.sy, self.conf.stheta]]))
+        
         # reward, done, info can't be included in the Gym format
         return self.normalise_observations(observation['scans'][0])
 

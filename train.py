@@ -45,7 +45,7 @@ from code.manus_callbacks import SaveOnBestTrainingRewardCallback
 from code.schedulers import linear_schedule
 
 TRAIN_DIRECTORY = "./train"
-TRAIN_STEPS = 25_000    # for reference, it takes about one sec per 500 steps
+TRAIN_STEPS = 35_000    # for reference, it takes about one sec per 500 steps
 SAVE_CHECK_FREQUENCY = int(TRAIN_STEPS / 10)
 MIN_EVAL_EPISODES = 10
 NUM_PROCESS = 4
@@ -85,7 +85,7 @@ def main():
     eval_env = RandomF1TenthMap(eval_env, 500)
     eval_env.seed(np.random.randint(pow(2, 31) - 1))"""
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") #RuntimeError: CUDA error: out of memory whenever I use gpu
-    model = PPO("MlpPolicy", envs,  learning_rate=linear_schedule(0.0003), gamma=0.99, gae_lambda=0.95, verbose=1, device='cpu')
+    model = PPO("MlpPolicy", envs,  learning_rate=linear_schedule(0.001), gamma=0.99, gae_lambda=0.95, verbose=1, device='cpu')
     eval_callback = EvalCallback(envs, best_model_save_path='./train_test/',
                              log_path='./train_test/', eval_freq=5000,
                              deterministic=True, render=False)
