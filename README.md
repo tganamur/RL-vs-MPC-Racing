@@ -12,11 +12,8 @@ Note that in the final report and slides, each group should specify the parts ea
 ## Project Overview 
 ## How to Run
 ## Acknowledgements
-1. Base framework for the RL portion of the project was provided by [FT-Autonomous](https://github.com/FT-Autonomous/F1Tenth-RL) and used the documentation provided to
-improve upon the RL methodology and setup for F1Tenth. 
-2. F1Tenth Gym Environment and documentation [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
-3. Stable Baselines3 documentation and examples of PPO RL method usage. 
+1. F1Tenth Gym Environment and documentation [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
+2. Stable Baselines3 documentation and examples of PPO RL method usage. 
 ## Citations
-1. [FT-Autonomous](https://github.com/FT-Autonomous/F1Tenth-RL)
-2. [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
-3. [Stable_baseline3](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html#example)
+1. [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
+2. [Stable_baseline3](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html#example)
