@@ -1,3 +1,4 @@
+# ME292B Final Project (Group 9)
 ## Project Overview 
 The project is centered around comparing the performance of a Reinforcement Learning (RL) based method to a Model Predictive Control (MPC) Method around the same track, the example track as provided by F1Tenth. The RL portion used stable_baselines3's PPO algorithm to train an agent to race around the track, using the F1Tenth gym envirnoment to aid in training and testing. The MPC part was implemented in Google colab using jupyter notebooks. 
 ## How to Run
