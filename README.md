@@ -24,7 +24,7 @@ python rl_best_model.py
 ```
 ## How to Run (Model Predictive Control)
 ```sh
-MPC Laptime Racing.ipynb
+MPC_Laptime_Racing.ipynb
 ```
 Run all the cells in order:\
 -For the 4th cell insure that the file paths are correct to not have any errors\
