@@ -1,8 +1,15 @@
 # ME292B Final Project (Group 9)
 ## Project Overview 
 The project is centered around comparing the performance of a Reinforcement Learning (RL) based method to a Model Predictive Control (MPC) Method around the same track, the example track as provided by F1Tenth. The RL portion used stable_baselines3's PPO algorithm to train an agent to race around the track, using the F1Tenth gym envirnoment to aid in training and testing. The MPC part was implemented in Google colab using jupyter notebooks. 
-## How to Run
-### Training (Train on PPO for 500,000 training steps)
+## How to Run (Reinforcement Learning)
+In a terminal window, create a new conda envirnoment, activate it, and install the required packages.
+``` sh
+conda create -n <name_of_env> python=3.8
+conda activate <name_of_env>
+cd ME292B_FinalProject
+pip install -r requirements.txt
+```
+### Training (Train using PPO)
 ```sh
 python rl_train_test.py --run train 
 ```
@@ -14,14 +21,22 @@ python rl_train_test.py --run test --model_path <path/to/model>
 ```sh
 python rl_best_model.py 
 ```
-## Results
-### RL Result
-![RL Result on Example Track](https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_result.gif)\
-RL Result on Example Track (following raceline)
+## How to Run (Model Predictive Control)
+# Results
+## RL Result
 
-### MPC Result
-![MPC Result on Example Track](https://github.com/tganamur/ME292B_FinalProject/blob/main/MPC_result.png)\
-MPC Result on Example Track (following raceline)
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_training_clip.gif" width="500" height="406">\
+RL Training Result on Example Track (250,000 training steps)
+
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_result.gif" width="500" height="365">\
+RL Result on Example Track (5,000,000 training steps, following raceline)
+
+## MPC Result
+
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_exampleTrack.png" width="500" height="390">\
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_IMS.png" width="500" height="390">\
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_BrandsHatch.png" width="500" height="390">\
+Results for MPC in three tracks: Example Track, IMS and Brands Hatch
 
 ## Acknowledgements
 1. F1Tenth Gym Environment and documentation [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
