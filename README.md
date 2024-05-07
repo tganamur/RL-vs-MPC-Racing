@@ -1,7 +1,14 @@
 # ME292B Final Project (Group 9)
 ## Project Overview 
 The project is centered around comparing the performance of a Reinforcement Learning (RL) based method to a Model Predictive Control (MPC) Method around the same track, the example track as provided by F1Tenth. The RL portion used stable_baselines3's PPO algorithm to train an agent to race around the track, using the F1Tenth gym envirnoment to aid in training and testing. The MPC part was implemented in Google colab using jupyter notebooks. 
-## How to Run
+## How to Run (Reinforcement Learning)
+In a terminal window, create a new conda envirnoment, activate it, and install the required packages.
+``` sh
+conda create -n <name_of_env> python=3.8
+conda activate <name_of_env>
+cd ME292B_FinalProject
+pip install -r requirements.txt
+```
 ### Training (Train using PPO)
 ```sh
 python rl_train_test.py --run train 
@@ -14,8 +21,9 @@ python rl_train_test.py --run test --model_path <path/to/model>
 ```sh
 python rl_best_model.py 
 ```
-## Results
-### RL Result
+## How to Run (Model Predictive Control)
+# Results
+## RL Result
 
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_training_clip.gif" width="500" height="406">\
 RL Training Result on Example Track (250,000 training steps)
@@ -23,7 +31,7 @@ RL Training Result on Example Track (250,000 training steps)
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_result.gif" width="500" height="365">\
 RL Result on Example Track (5,000,000 training steps, following raceline)
 
-### MPC Result
+## MPC Result
 
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_exampleTrack.png" width="500" height="390">\
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_IMS.png" width="500" height="390">\
