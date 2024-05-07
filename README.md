@@ -27,9 +27,9 @@ python rl_best_model.py
 MPC_Laptime_Racing.ipynb
 ```
 Run all the cells in order:\
--For the 4th cell insure that the file paths are correct to not have any errors\
+-For the 4th cell ensure that the file paths are correct to not have any errors\
 -For the 6th cell choose the track and dynamics model\
--The 7th cell has the results of the MPC plotted out\ 
+-The 7th cell has the results of the MPC plotted out 
 # Results
 The results from RL and MPC are shown below. The RL agent finishes the track in 16.58 seconds, around the example track. The bicycle kinematic dynamic based MPC finished the example track in 10.81 seconds. 
 ## RL Result
