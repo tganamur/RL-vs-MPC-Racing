@@ -27,9 +27,7 @@ import pandas as pd
 from gym import spaces
 from pathlib import Path
 
-from code.random_trackgen import create_track, convert_track
-import csv
-from pyglet.gl import GL_POINTS
+from code.random_trackgen import create_trafrom pyglet.gl import GL_POINTS
 from numba import njit
 from argparse import Namespace
 import yaml
@@ -606,6 +604,21 @@ class RandomF1TenthMap(gym.Wrapper):
             # store waypoints
             #self.waypoints = np.genfromtxt(f"centerline/map{self.current_seed}.csv",delimiter=',')
             self.waypoints = np.genfromtxt(f"./f1tenth_racetracks/{randmap}/{randmap}_waypoints.csv", delimiter=';')
+date_map(f"./maps/map{self.current_seed}", ".png")
+            self.update_map(f"./f1tenth_racetracks/{randmap}/{randmap}_map", ".png")
+            # store waypoints
+            #self.waypoints = np.genfromtxt(f"centerline/map{self.current_seed}.csv",delimiter=',')
+            self.waypoints = np.genfromtxt(f"./f1tenth_racetracks/{randmap}/{randmap}_centerline.csv", delimiter=',')
+rrent_seed}", ".png")
+            self.update_map(f"./f1tenth_racetracks/{randmap}/{randmap}_map", ".png")
+            # store waypoints
+            #self.waypoints = np.genfromtxt(f"centerline/map{self.current_seed}.csv",delimiter=',')
+            self.waypoints = np.genfromtxt(f"./f1tenth_racetracks/{randmap}/{randmap}_centerline.csv", delimiter=',')
+current_seed}", ".png")
+            self.update_map(f"./f1tenth_racetracks/{randmap}/{randmap}_map", ".png")
+            # store waypoints
+            #self.waypoints = np.genfromtxt(f"centerline/map{self.current_seed}.csv",delimiter=',')
+            self.waypoints = np.genfromtxt(f"./f1tenth_racetracks/{randmap}/{randmap}_centerline.csv", delimiter=',')
             globwaypoints = self.waypoints
 
         # get random starting position from centerline
