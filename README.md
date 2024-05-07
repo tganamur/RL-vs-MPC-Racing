@@ -22,7 +22,12 @@ python rl_train_test.py --run test --model_path <path/to/model>
 python rl_best_model.py 
 ```
 ## How to Run (Model Predictive Control)
+Run all the cells in order:\
+-For the 4th cell insure that the file paths are correct to not have any errors\
+-For the 6th cell choose the track and dynamics model\
+-The 7th cell has the results of the MPC plotted out\ 
 # Results
+The results from RL and MPC are shown below. The RL agent finishes the track in 16.58 seconds, around the example track. The bicycle kinematic dynamic based MPC finished the example track in 10.81 seconds. 
 ## RL Result
 
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_training_clip.gif" width="500" height="406">\
@@ -32,7 +37,6 @@ RL Training Result on Example Track (250,000 training steps)
 RL Result on Example Track (5,000,000 training steps, following raceline)
 
 ## MPC Result
-
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_exampleTrack.png" width="500" height="390">\
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_BrandsHatch.png" width="500" height="390">\
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/MPC_result_IMS_1.png" width="400" height="800">\
@@ -40,10 +44,9 @@ Results for MPC in three tracks: Example Track, Brands Hatch and IMS
 
 ## Acknowledgements
 1. F1Tenth Gym Environment and documentation [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
-2. Stable Baselines3 documentation and examples of PPO RL method usage. 
-## Citations
-1. [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
-2. [Stable_baseline3](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html#example)
+2. Stable Baselines3 documentation and examples of PPO RL method usage.
+
+** All other citations are in the project report under "References". 
 
 ### Instructions for final project submission
 Please use this public repository as the template and name it "Group_X". For example, Group 2 should create a private repository in the ME292B organization and name it "Group_2".
