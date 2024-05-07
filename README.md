@@ -12,11 +12,17 @@ Note that in the final report and slides, each group should specify the parts ea
 ## Project Overview 
 ## How to Run
 ### Training 
+```sh
 python rl_train_test.py --run train 
-### Testing 
+```
+### Testing
+```sh 
 python rl_train_test.py --run test --model_path <path/to/model>
+```
 ### Quick Run Best Model
+```sh
 python rl_best_model.py 
+```
 
 ## Acknowledgements
 1. F1Tenth Gym Environment and documentation [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
