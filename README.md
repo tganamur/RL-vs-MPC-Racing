@@ -11,6 +11,7 @@ Please use this template for final project report, [Final project report templat
 Note that in the final report and slides, each group should specify the parts each member has completed and highlight the contributions of each member. We grade each student based on the group project and individual contributions within the group. The code should include instructions on how to run it and reproduce the results.
 
 ## Project Overview 
+The project is centered around comparing the performance of a Reinforcement Learning (RL) based method to a Model Predictive Control (MPC) Method around the same track, the example track as provided by F1Tenth. The RL portion used stable_baselines3's PPO algorithm to train an agent to race around the track, using the F1Tenth gym envirnoment to aid in training and testing. The MPC part was implemented in Google colab using jupyter notebooks. 
 ## How to Run
 ### Training (Train on PPO for 500,000 training steps)
 ```sh
