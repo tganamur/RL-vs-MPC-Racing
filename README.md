@@ -1,4 +1,4 @@
-#### Instructions for final project submission
+### Instructions for final project submission
 Please use this public repository as the template and name it "Group_X". For example, Group 2 should create a private repository in the ME292B organization and name it "Group_2".
 
 Each group should submit the following files through GitHub:
