@@ -2,7 +2,7 @@
 ## Project Overview 
 The project is centered around comparing the performance of a Reinforcement Learning (RL) based method to a Model Predictive Control (MPC) Method around the same track, the example track as provided by F1Tenth. The RL portion used stable_baselines3's PPO algorithm to train an agent to race around the track, using the F1Tenth gym envirnoment to aid in training and testing. The MPC part was implemented in Google colab using jupyter notebooks. 
 ## How to Run
-### Training (Train on PPO for 500,000 training steps)
+### Training (Train using PPO)
 ```sh
 python rl_train_test.py --run train 
 ```
@@ -16,11 +16,16 @@ python rl_best_model.py
 ```
 ## Results
 ### RL Result
-![RL Result on Example Track](https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_result.gif)\
-RL Result on Example Track (following raceline)
+
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_training_clip.gif" width="500" height="406">\
+RL Training Result on Example Track (250,000 training steps)
+
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_result.gif" width="500" height="365">\
+RL Result on Example Track (5,000,000 training steps, following raceline)
 
 ### MPC Result
-![MPC Result on Example Track](https://github.com/tganamur/ME292B_FinalProject/blob/main/MPC_result.png)\
+
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_exampleTrack.png" width="500" height="390">\
 MPC Result on Example Track (following raceline)
 
 ## Acknowledgements
