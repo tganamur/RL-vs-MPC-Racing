@@ -12,15 +12,15 @@ Note that in the final report and slides, each group should specify the parts ea
 
 ## Project Overview 
 ## How to Run
-### Training 
+### Training (Train on PPO for 500,000 training steps)
 ```sh
 python rl_train_test.py --run train 
 ```
-### Testing
+### Testing (Test best saved model from training)
 ```sh 
 python rl_train_test.py --run test --model_path <path/to/model>
 ```
-### Quick Run Best Model
+### Quick Run Best Model (Best results)
 ```sh
 python rl_best_model.py 
 ```
