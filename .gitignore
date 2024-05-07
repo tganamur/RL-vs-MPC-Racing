@@ -28,3 +28,5 @@ wandb/
 #train folder
 train_test/
 train/
+
+logs/
