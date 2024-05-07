@@ -2,6 +2,7 @@
 ## Project Overview 
 The project is centered around comparing the performance of a Reinforcement Learning (RL) based method to a Model Predictive Control (MPC) Method around the same track, the example track as provided by F1Tenth. The RL portion used stable_baselines3's PPO algorithm to train an agent to race around the track, using the F1Tenth gym envirnoment to aid in training and testing. The MPC part was implemented in Google colab using jupyter notebooks. 
 ## How to Run (Reinforcement Learning)
+First clone the repo. 
 In a terminal window, create a new conda envirnoment, activate it, and install the required packages.
 ``` sh
 conda create -n <name_of_env> python=3.8
@@ -22,6 +23,9 @@ python rl_train_test.py --run test --model_path <path/to/model>
 python rl_best_model.py 
 ```
 ## How to Run (Model Predictive Control)
+```sh
+MPC Laptime Racing.ipynb
+```
 Run all the cells in order:\
 -For the 4th cell insure that the file paths are correct to not have any errors\
 -For the 6th cell choose the track and dynamics model\
