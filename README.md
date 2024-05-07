@@ -34,7 +34,7 @@ RL Result on Example Track (5,000,000 training steps, following raceline)
 ## MPC Result
 
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_exampleTrack.png" width="500" height="390">\
-<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_IMS.png" width="500" height="390">\
+<img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/MPC_result_IMS_1.png" width="500" height="390">\
 <img src="https://github.com/tganamur/ME292B_FinalProject/blob/main/mpc_result_BrandsHatch.png" width="500" height="390">\
 Results for MPC in three tracks: Example Track, IMS and Brands Hatch
 
