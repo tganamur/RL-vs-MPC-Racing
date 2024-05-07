@@ -30,3 +30,5 @@ train_test/
 train/
 
 logs/
+
+models/

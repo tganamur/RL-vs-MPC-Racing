@@ -11,6 +11,13 @@ Please use this template for final project report, [Final project report templat
 Note that in the final report and slides, each group should specify the parts each member has completed and highlight the contributions of each member. We grade each student based on the group project and individual contributions within the group. The code should include instructions on how to run it and reproduce the results.
 ## Project Overview 
 ## How to Run
+### Training 
+python rl_train_test.py --run train 
+### Testing 
+python rl_train_test.py --run test --model_path <path/to/model>
+### Quick Run Best Model
+python rl_best_model.py 
+
 ## Acknowledgements
 1. F1Tenth Gym Environment and documentation [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
 2. Stable Baselines3 documentation and examples of PPO RL method usage. 
