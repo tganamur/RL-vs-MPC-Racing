@@ -27,7 +27,7 @@ def train(args):
     env = make_env('f110_gym:f110-v0', planner, max_steps=5000)
 
     # Create the PPO model
-    model = PPO('MlpPolicy', env, verbose=1, learning_rate=0.0005, tensorboard_log="./logs/")
+    model = PPO('MlpPolicy', env, verbose=1, learning_rate=0.0003, tensorboard_log="./logs/")
     eval_callback = EvalCallback(env, best_model_save_path='./train_test/',
                              log_path='./train_test/', eval_freq=5000,
                              deterministic=True, render=False)
