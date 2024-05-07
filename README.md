@@ -25,7 +25,7 @@ python rl_train_test.py --run test --model_path <path/to/model>
 python rl_best_model.py 
 ```
 ##RL Result
-[RL Result on Example Track](https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_result.gif)
+[!RL Result on Example Track](https://github.com/tganamur/ME292B_FinalProject/blob/main/rl_result.gif)
 
 ## Acknowledgements
 1. F1Tenth Gym Environment and documentation [F1Tenth](https://github.com/f1tenth/f1tenth_gym)
