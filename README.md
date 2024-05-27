@@ -9,7 +9,7 @@ __Reinforcement Learning (RL)__: An agent was trained using stable_baselines3's 
 
 __Model Predictive Control (MPC)__: Two different vehicle dynamics models were implemented - a unicycle model and a kinematic bicycle model. The MPC solutions tracked the center line waypoints while optimizing for minimum lap time under constraints like steering limits. The unicycle model achieved 8.7 seconds and the kinematic bicycle model 10.81 seconds on the example track.
 
-The project involved setting up the simulation environments, defining reward functions, tuning hyperparameters, and addressing challenges related to dynamics modeling and constraint handling. This project was a collaboration between myself, @EdwardShiBerkely, @FahimChoudhury007, and @yashopadmin, 
+The project involved setting up the simulation environments, defining reward functions, tuning hyperparameters, and addressing challenges related to dynamics modeling and constraint handling. This project was a collaboration between myself, @EdwardShiBerkeley, @FahimChoudhury007, and @yashopadmin, 
 
 ## How to Run (Reinforcement Learning)
 First clone the repo. 
